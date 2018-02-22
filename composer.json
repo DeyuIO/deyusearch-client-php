@@ -1,0 +1,21 @@
+{
+    "name": "deyuio/deyusearch-client-php",
+    "description": "Deyu Search API Client for PHP",
+    "type": "library",
+    "homepage": "https://github.com/DeyuIO/deyusearch-client-php",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DeyuIO",
+            "email": "deyu@mopaoshu.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "DeyuSearch\\": "src/"
+        }
+    }
+}
