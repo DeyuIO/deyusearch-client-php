@@ -103,8 +103,9 @@ class DeyuSearchEngine extends Engine
             );
         }
 
-        $options = array_merge($options, $builder->model->getSearchSettings());
-        // dd($options);
+        if (method_exists($builder->model, 'getSearchSettings')) {
+            $options = array_merge($options, $builder->model->getSearchSettings());
+        }
 
         $options['query'] = $builder->query;
 
