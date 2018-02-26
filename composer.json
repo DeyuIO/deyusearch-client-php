@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DeyuSearch\\": "src/"
+            "DeyuSearch\\": "src/DeyuSearch/"
         }
     }
 }
