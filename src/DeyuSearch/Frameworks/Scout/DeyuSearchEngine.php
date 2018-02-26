@@ -73,7 +73,7 @@ class DeyuSearchEngine extends Engine
 
             if (isset($models[$key])) {
                 if (isset($hit['_highlight'])) {
-                    $models[$key]->highlight = $hit['_highlight'];
+                    $models[$key]->_highlight = $hit['_highlight'];
                 }
                 return $models[$key];
             }
