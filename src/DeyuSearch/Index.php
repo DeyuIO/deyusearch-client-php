@@ -77,4 +77,22 @@ class Index
             $params
         );
     }
+
+    public function setSettings($params)
+    {
+        return $this->client->request(
+            "/v1/indices/{$this->url_index_name}/settings",
+            'PUT',
+            $params
+        );
+    }
+
+    public function getSettings()
+    {
+        return $this->client->request(
+            "/v1/indices/{$this->url_index_name}/settings",
+            'GET',
+            $params
+        );
+    }
 }
