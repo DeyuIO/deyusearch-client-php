@@ -108,4 +108,25 @@ class Client
         return $answer;
     }
 
+    /**
+     * 获取索引列表
+     */
+    public function listIndexes()
+    {
+        return $this->request(
+            "/v1/indices/" ,
+            'GET'
+        );
+    }
+
+    /**
+     * 删除索引
+     */
+    public function deleteIndex($index_name)
+    {
+        return $this->request(
+            "/v1/indices/" . urlencode($index_name),
+            'DELETE'
+        );
+    }
 }

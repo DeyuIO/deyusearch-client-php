@@ -20,6 +20,50 @@ class Index
         );
     }
 
+    public function saveObject($body)
+    {
+        return $this->client->request(
+            "/v1/indices/{$this->url_index_name}/" . urlencode($body['object_id']),
+            'PUT',
+            $body
+        );
+    }
+
+    public function getObject($object_id, $attributes = [])
+    {
+        $url = "/v1/indices/{$this->url_index_name}/" . urlencode($object_id);
+        if (!empty($attributes)) {
+            $url .= '?attributes=' . implode(',', $attributes);
+        }
+        return $this->client->request(
+            $url,
+            'GET'
+        );
+    }
+
+    public function saveObjects($objects, $object_id_key = 'object_id')
+    {
+        $requests = $this->buildBatch('updateObject', $objects, true, $object_id_key);
+
+        return $this->batch($requests);
+    }
+
+    public function partialUpdateObject($body)
+    {
+        return $this->client->request(
+            "/v1/indices/{$this->url_index_name}/" . urlencode($body['object_id']) . '/partial',
+            'POST',
+            $body
+        );
+    }
+
+    public function partialUpdateObjects($objects, $object_id_key = 'object_id')
+    {
+        $requests = $this->buildBatch('partialUpdateObject', $objects, true, $object_id_key);
+
+        return $this->batch($requests);
+    }
+
     public function deleteObject($object_id)
     {
         return $this->client->request(
