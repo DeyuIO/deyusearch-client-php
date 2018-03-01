@@ -6,7 +6,7 @@ class Client
 {
 
     const VERSION = '0.0.1';
-    const GATEWAY = 'https://api.deyu.io';
+    const GATEWAY = 'http://api.deyuapi.com';
 
     public function __construct($appid, $appkey)
     {
