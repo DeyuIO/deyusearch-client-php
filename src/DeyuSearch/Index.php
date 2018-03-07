@@ -41,6 +41,30 @@ class Index
         );
     }
 
+    public function getObjects($object_ids, $attributes = [])
+    {
+        if (empty($object_ids)) {
+            throw new Exception('no object_id provided');
+        }
+
+        $url = '/v1/indices/*/objects';
+        if (!empty($attributes)) {
+            $url .= '?attributes=' . implode(',', $attributes);
+        }
+
+        $requests = [];
+        foreach ($object_ids as $object_id) {
+            array_push($requests, ['index_name' => $this->url_index_name, 'object_id' => $object_id]);
+        }
+
+        return $this->client->request(
+            $url,
+            'POST',
+            ['requests' => $requests]
+        );
+    }
+
+
     public function saveObjects($objects, $object_id_key = 'object_id')
     {
         $requests = $this->buildBatch('updateObject', $objects, true, $object_id_key);
