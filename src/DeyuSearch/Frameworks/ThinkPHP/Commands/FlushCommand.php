@@ -7,12 +7,12 @@ use think\console\Input;
 use think\console\Output;
 use think\console\input\Argument;
 
-class ImportCommand extends Command
+class FlushCommand extends Command
 {
 
     protected function configure()
     {
-        $this->setName('deyu:import')->setDescription('Import the given model to search index');
+        $this->setName('deyu:flush')->setDescription("Flush all of the model's records from the index");
         $this->addArgument('class', Argument::REQUIRED, "The name of the model class");
     }
 
@@ -25,8 +25,10 @@ class ImportCommand extends Command
             return;
         }
 
-        (new $class)->makeAllSearchable(function ($last_imported_id) use ($output, $class) {
-            $output->writeln('Imported model [' . $class . '] up to ID: ' . $last_imported_id);
+        (new $class)->makeAllUnsearchable(function ($last_flushed_id) use ($output, $class) {
+            $output->writeln('Flushed model [' . $class . '] up to ID: ' . $last_flushed_id);
         });
+
+        $output->writeln('All ['.$class.'] records have been flushed.');
     }
 }

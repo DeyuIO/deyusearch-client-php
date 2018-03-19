@@ -9,7 +9,6 @@ class Engine
 {
     public function __construct()
     {
-        Config::load(APP_PATH . '/deyu.php');
         $this->client = new Client(config('deyu.appid'), config('deyu.appkey'));
     }
 
@@ -25,15 +24,6 @@ class Engine
     protected function performSearch(Builder $builder, array $options = [])
     {
         $deyu = $this->client->initIndex($builder->model->searchableAs());
-
-        // if ($builder->callback) {
-        //     return call_user_func(
-        //         $builder->callback,
-        //         $deyu,
-        //         $builder->query,
-        //         $options
-        //     );
-        // }
 
         if (method_exists($builder->model, 'getSearchSettings')) {
             $options = array_merge($options, $builder->model->getSearchSettings());
@@ -85,5 +75,17 @@ class Engine
     public function getTotalCount($results)
     {
         return $results['total'];
+    }
+
+    public function delete($models) 
+    {
+        $index = $this->client->initIndex($models[0]->searchableAs());
+
+        $object_ids = [];
+        foreach ($models as $model) {
+            array_push($object_ids, $model->getData($model->getPk()));
+        }
+
+        $index->deleteObjects($object_ids);
     }
 }
