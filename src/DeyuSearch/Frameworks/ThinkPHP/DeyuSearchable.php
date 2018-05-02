@@ -21,7 +21,6 @@ trait DeyuSearchable
         });
 
         static::event('after_delete', function ($model) {
-            dump($model);exit;
             $model->searchEngine()->delete([$model]);
         });
 
