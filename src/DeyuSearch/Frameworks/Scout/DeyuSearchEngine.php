@@ -93,6 +93,10 @@ class DeyuSearchEngine extends Engine
         $deyu = $this->deyu->initIndex(
             $builder->index ?: $builder->model->searchableAs()
         );
+        
+        if (method_exists($builder->model, 'getSearchSettings')) {
+            $options = array_merge($options, $builder->model->getSearchSettings());
+        }
 
         if ($builder->callback) {
             return call_user_func(
@@ -103,9 +107,6 @@ class DeyuSearchEngine extends Engine
             );
         }
 
-        if (method_exists($builder->model, 'getSearchSettings')) {
-            $options = array_merge($options, $builder->model->getSearchSettings());
-        }
 
         $options['query'] = $builder->query;
 
