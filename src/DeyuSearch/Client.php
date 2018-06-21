@@ -6,7 +6,7 @@ class Client
 {
 
     const VERSION = '0.0.1';
-    const GATEWAY = 'http://api.deyuapi.com';
+    const GATEWAY = 'http://api.deyuio.com';
 
     public function __construct($appid, $appkey)
     {
@@ -126,6 +126,17 @@ class Client
     {
         return $this->request(
             "/v1/indices/" . urlencode($index_name),
+            'DELETE'
+        );
+    }
+
+    /**
+     * 删除索引
+     */
+    public function clearIndex($index_name)
+    {
+        return $this->request(
+            "/v1/indices/" . urlencode($index_name) . '/clear',
             'DELETE'
         );
     }
